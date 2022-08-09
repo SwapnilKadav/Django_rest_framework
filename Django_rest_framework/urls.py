@@ -15,16 +15,41 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 
 from model import views
 from cmodel.views import ProductDetail, ProductList
+from mixins.views import ProductListMixins, ProductDetailmixins
+
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Django_rest_framework",
+      default_version='v1',
+      description="Test description",
+      terms_of_service="https://www.google.com/policies/terms/",
+      contact=openapi.Contact(email="contact@snippets.local"),
+      license=openapi.License(name="BSD License"),
+   ),
+   public=True,
+   permission_classes=[permissions.AllowAny],
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.ProductView),
     path('products/',views.Product_list),
     path('products/<int:pk>/',views.Product_detail),
+
     path('api/products/', ProductList.as_view()),
     path('api/products/<int:pk>',ProductDetail.as_view()),
+
+    path('api/mixins/', ProductListMixins.as_view()),
+    path('api/mixins/<int:pk>', ProductDetailmixins.as_view()),
+
+
+    path('swagger', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 
 ]
