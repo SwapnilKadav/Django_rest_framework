@@ -28,8 +28,8 @@ from mixins.views import ProductListMixins, ProductDetailmixins
 from generic.views import ProductListGen, ProductDetailGen
 from viewsets.views import ProductViewSet
 
-router = DefaultRouter()
-router.register('viewset',ProductViewSet)
+# router = DefaultRouter()
+# router.register('viewset',ProductViewSet)
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -59,7 +59,9 @@ urlpatterns = [
     path('api/gen/',ProductListGen.as_view()),
     path('api/gen/<int:pk>',ProductDetailGen.as_view()),
 
-    path('', include(router.urls)),
+    # path('', include(router.urls)),
+    path('viewset/',ProductListGen.as_view()),
+    
 
     path('api-token-auth/',obtain_auth_token, name="api_token_auth"),
 

@@ -25,9 +25,11 @@ SECRET_KEY = 'django-insecure-pcledb_ylr!=@j#*we$37og3c6(0n$3n=i4!(s60d(xixfu1)&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
-
+CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
+CORS_ORIGIN_ALLOW_ALL=True
+CORS_ALLOW_HEADERS = "*"
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_swagger',
     'rest_framework.authtoken',
+    'corsheaders',
     'model',
     'cmodel',
     'mixins',
@@ -62,6 +65,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'Django_rest_framework.urls'
