@@ -14,15 +14,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from rest_framework import permissions
+from rest_framework.routers import DefaultRouter 
+from rest_framework.authtoken.views import obtain_auth_token
+
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 from model import views
 from cmodel.views import ProductDetail, ProductList
 from mixins.views import ProductListMixins, ProductDetailmixins
+from generic.views import ProductListGen, ProductDetailGen
+from viewsets.views import ProductViewSet
 
+router = DefaultRouter()
+router.register('viewset',ProductViewSet)
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -49,6 +56,12 @@ urlpatterns = [
     path('api/mixins/', ProductListMixins.as_view()),
     path('api/mixins/<int:pk>', ProductDetailmixins.as_view()),
 
+    path('api/gen/',ProductListGen.as_view()),
+    path('api/gen/<int:pk>',ProductDetailGen.as_view()),
+
+    path('', include(router.urls)),
+
+    path('api-token-auth/',obtain_auth_token, name="api_token_auth"),
 
     path('swagger', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 

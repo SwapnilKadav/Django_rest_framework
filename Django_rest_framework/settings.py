@@ -40,9 +40,19 @@ INSTALLED_APPS = [
     'drf_yasg',
     'rest_framework',
     'rest_framework_swagger',
+    'rest_framework.authtoken',
     'model',
     'cmodel',
+    'mixins',
+    'generic',
+    'viewsets',
 ]
+
+REST_FRAMEWORK={
+    'DEFAULT_AUTHENTICATION_CLASSES':[
+    'rest_framework.authentication.TokenAuthentication'
+    ]
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
